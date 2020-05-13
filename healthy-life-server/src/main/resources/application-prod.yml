@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    # Postgres
+    url: jdbc:postgresql://ec2-176-34-97-213.eu-west-1.compute.amazonaws.com:5432/df8ip8bamearmm
+    username: ulavqqzdvbdjko
+    password: 41f44e2ad7f6b8b17eba3c622deb2b022602f8722dd165fa2836758b9de12ea4
+  # Flyway
+  flyway:
+    user: ulavqqzdvbdjko
+    password: 41f44e2ad7f6b8b17eba3c622deb2b022602f8722dd165fa2836758b9de12ea4
+    url: jdbc:postgresql://ec2-176-34-97-213.eu-west-1.compute.amazonaws.com:5432/df8ip8bamearmm

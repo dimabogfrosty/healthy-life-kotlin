@@ -1,1 +1,19 @@
-
+spring:
+  # Hibernate / JPA
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    # Postgres
+    url: jdbc:postgresql://localhost:5432/healthy_life
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+  # Flyway
+  flyway:
+    user: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/healthy_life

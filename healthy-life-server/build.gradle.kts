@@ -3,6 +3,7 @@ plugins  {
 
     kotlin("jvm")
     kotlin("plugin.spring")
+    kotlin("plugin.allopen")
 }
 
 dependencies {
@@ -23,6 +24,12 @@ dependencies {
 
     // Postgress
     runtimeOnly("org.postgresql:postgresql")
+}
+
+allOpen {
+    annotation("javax.persistence.Entity")
+    annotation("javax.persistence.Embeddable")
+    annotation("javax.persistence.MappedSuperclass")
 }
 
 tasks.withType<Test> {

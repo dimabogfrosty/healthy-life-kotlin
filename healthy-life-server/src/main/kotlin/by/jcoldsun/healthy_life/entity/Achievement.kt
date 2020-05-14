@@ -12,6 +12,6 @@ data class Achievement(
         @SequenceGenerator(name = "achievement_id_seq", sequenceName = "achievements_id_seq", allocationSize = 1)
         var id: Long? = null,
         var name: String = "",
-        var descrition: String = "",
+        var description: String = "",
         @Column(name = "image_src") var imageSource: String = "",
         @ManyToMany(mappedBy = "achievements", targetEntity = User::class) var users: List<User> = arrayListOf())

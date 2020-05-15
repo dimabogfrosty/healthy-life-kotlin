@@ -1,19 +1,28 @@
 package by.jcoldsun.healthy_life.controller
 
+import by.jcoldsun.healthy_life.entity.User
 import by.jcoldsun.healthy_life.service.UserService
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/v1/users")
 class UserController(private val userService: UserService) {
 
     @GetMapping
-    fun getAllUsers() = userService.getAll()
+    fun getAllUsers() = ResponseEntity(userService.getAll(), HttpStatus.OK)
 
     @GetMapping("/{id:\\d+}")
-    fun getUserById(@PathVariable id: Long) = userService.getById(id)
+    fun getUserById(@PathVariable id: Long) = ResponseEntity(userService.getById(id), HttpStatus.OK)
+
+    @PostMapping
+    fun createUser(@RequestBody user: User) = ResponseEntity(userService.save(user), HttpStatus.CREATED)
+
+    @PutMapping
+    fun updateUser(@RequestBody user: User) = ResponseEntity(userService.save(user), HttpStatus.OK)
+
+    @DeleteMapping("/{id:\\d+}")
+    fun deleteUser(@PathVariable id: Long) = ResponseEntity(userService.delete(id), HttpStatus.OK)
 
 }

@@ -17,7 +17,7 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity?) {
         http
                 ?.csrf()?.disable()
-                ?.cors()?.disable()
+                ?.cors(withDefaults())
                 ?.authorizeRequests()
                 ?.antMatchers("/**")
                 ?.permitAll()
@@ -28,6 +28,7 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
         val corsConfiguration = CorsConfiguration()
         corsConfiguration.allowedOrigins = arrayListOf("http://localhost:3000")
         corsConfiguration.allowedMethods = arrayListOf("GET", "POST", "PUT", "DELETE")
+        corsConfiguration.allowCredentials = true
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", corsConfiguration)
         return source

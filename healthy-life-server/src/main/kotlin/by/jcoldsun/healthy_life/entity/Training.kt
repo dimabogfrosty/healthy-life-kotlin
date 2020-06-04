@@ -1,10 +1,11 @@
 package by.jcoldsun.healthy_life.entity
 
-import java.util.*
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import javax.persistence.*
 
 @Entity
 @Table(name = "trainings")
+@JsonIgnoreProperties(value = ["users"])
 data class Training(
         @Id
         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "training_id_seq")
@@ -13,5 +14,6 @@ data class Training(
         var name: String? = null,
         var description: String? = null,
         @ManyToMany(mappedBy = "trainings", targetEntity = User::class) var users: MutableList<User> = arrayListOf(),
-        @OneToMany(mappedBy = "training", targetEntity = Exercise::class) var exercises: MutableSet<Exercise> = TreeSet()
-)
+        @OneToMany(mappedBy = "training", targetEntity = DayOfTraining::class)
+        var daysOfTrainings: MutableList<DayOfTraining> = arrayListOf())
+

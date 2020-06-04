@@ -1,10 +1,11 @@
 package by.jcoldsun.healthy_life.entity
 
-import com.fasterxml.jackson.annotation.JsonBackReference
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import javax.persistence.*
 
 @Entity
 @Table(name = "exercises")
+@JsonIgnoreProperties(value = ["daysOfTraining"])
 data class Exercise(
         @Id
         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "exercise_id_seq")
@@ -15,10 +16,6 @@ data class Exercise(
         @Column(name = "image_src") var imageSource: String? = null,
         @Column(name = "number") var count: Int = 0, // number of times or distance
         var reiteration: Int = 0, // number of repetitions
-        var dayOfTraining: Int = 0, // number of the day for training
-        @ManyToOne(targetEntity = Training::class)
-        @JoinColumn(name = "training_id")
-        @JsonBackReference
-        var training: Training? = null) : Comparable<Exercise> {
-    override fun compareTo(other: Exercise) = this.dayOfTraining.compareTo(other.dayOfTraining)
-}
+        @ManyToMany(mappedBy = "exercises", targetEntity = DayOfTraining::class)
+        var daysOfTraining: MutableList<DayOfTraining> = arrayListOf()
+)

@@ -16,7 +16,8 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity?) {
         http
-                ?.cors(withDefaults())
+                ?.csrf()?.disable()
+                ?.cors()?.disable()
                 ?.authorizeRequests()
                 ?.antMatchers("/**")
                 ?.permitAll()

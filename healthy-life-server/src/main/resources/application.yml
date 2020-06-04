@@ -17,3 +17,7 @@ spring:
     user: postgres
     password: postgres
     url: jdbc:postgresql://localhost:5432/healthy_life
+
+jwt:
+  secret:
+    key: secretKey

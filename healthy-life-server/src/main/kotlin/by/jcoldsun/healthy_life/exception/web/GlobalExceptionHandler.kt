@@ -1,6 +1,7 @@
 package by.jcoldsun.healthy_life.exception.web
 
 import by.jcoldsun.healthy_life.exception.entity.*
+import by.jcoldsun.healthy_life.exception.token.InvalidJwtAuthenticationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -16,6 +17,10 @@ class GlobalExceptionHandler {
         RecordNotFoundException::class, AchievementNotFoundException::class])
     fun handleEntityNotFoundException(ex: EntityNotFoundException, request: WebRequest) =
             ResponseEntity(ex.message?.let { response(LocalDateTime.now(), it) }, HttpStatus.NOT_FOUND)
+
+    @ExceptionHandler(value = [InvalidJwtAuthenticationException::class])
+    fun handleInvalidJwtAuthenticationException(ex: EntityNotFoundException, request: WebRequest) =
+            ResponseEntity(ex.message?.let { response(LocalDateTime.now(), it) }, HttpStatus.UNAUTHORIZED)
 
     private fun response(timestamp: Any, message: Any): Map<String, Any> {
         val body = LinkedHashMap<String, Any>()

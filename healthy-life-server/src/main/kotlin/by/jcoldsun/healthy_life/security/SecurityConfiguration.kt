@@ -2,10 +2,14 @@ package by.jcoldsun.healthy_life.security
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.Customizer.withDefaults
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
@@ -14,13 +18,16 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @EnableWebSecurity
 class SecurityConfiguration : WebSecurityConfigurerAdapter() {
 
-    override fun configure(http: HttpSecurity?) {
+    override fun configure(http: HttpSecurity) {
         http
-                ?.csrf()?.disable()
-                ?.cors(withDefaults())
-                ?.authorizeRequests()
-                ?.antMatchers("/**")
-                ?.permitAll()
+                .httpBasic().disable()
+                .csrf().disable()
+                .cors(withDefaults())
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers("/**")
+                .permitAll()
     }
 
     @Bean
@@ -33,4 +40,12 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
         source.registerCorsConfiguration("/**", corsConfiguration)
         return source
     }
+
+    @Bean
+    override fun authenticationManagerBean(): AuthenticationManager {
+        return super.authenticationManagerBean()
+    }
+
+    @Bean
+    fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 }

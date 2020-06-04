@@ -20,6 +20,9 @@ dependencies {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
 
+    // JWT
+    implementation("io.jsonwebtoken:jjwt:0.9.1")
+
     // Flyway
     implementation("org.flywaydb:flyway-core:6.4.1")
 

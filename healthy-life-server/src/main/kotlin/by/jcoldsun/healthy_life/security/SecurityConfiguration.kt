@@ -42,8 +42,9 @@ class SecurityConfiguration(private val jwtProvider: JwtProvider, private val us
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val corsConfiguration = CorsConfiguration()
-        corsConfiguration.allowedOrigins = arrayListOf("http://localhost:3000")
+        corsConfiguration.allowedOrigins = arrayListOf("*")
         corsConfiguration.allowedMethods = arrayListOf("GET", "POST", "PUT", "DELETE")
+        corsConfiguration.allowedHeaders = arrayListOf("*")
         corsConfiguration.allowCredentials = true
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", corsConfiguration)

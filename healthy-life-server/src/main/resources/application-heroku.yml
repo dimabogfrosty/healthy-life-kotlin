@@ -1,11 +1,11 @@
 spring:
   datasource:
     # Postgres
-    url: jdbc:postgresql://ec2-176-34-97-213.eu-west-1.compute.amazonaws.com:5432/df8ip8bamearmm
-    username: ulavqqzdvbdjko
-    password: 41f44e2ad7f6b8b17eba3c622deb2b022602f8722dd165fa2836758b9de12ea4
+    url: jdbc:postgresql://ec2-176-34-114-78.eu-west-1.compute.amazonaws.com:5432/dfqg0i9u8lj3pt
+    username: eaggrhhikthane
+    password: 16a78b13f184f45412812d3915d0f4558fdf4f5da18e3c5a33b6c3da13c34d14
   # Flyway
   flyway:
-    user: ulavqqzdvbdjko
-    password: 41f44e2ad7f6b8b17eba3c622deb2b022602f8722dd165fa2836758b9de12ea4
+    user: eaggrhhikthane
+    password: 16a78b13f184f45412812d3915d0f4558fdf4f5da18e3c5a33b6c3da13c34d14
     url: jdbc:postgresql://ec2-176-34-97-213.eu-west-1.compute.amazonaws.com:5432/df8ip8bamearmm

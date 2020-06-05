@@ -13,7 +13,9 @@ import javax.persistence.EntityNotFoundException
 class GlobalExceptionHandler {
 
     @ExceptionHandler(value = [UserNotFoundException::class, RoleNotFoundException::class,
-        RecordNotFoundException::class, AchievementNotFoundException::class])
+        RecordNotFoundException::class, AchievementNotFoundException::class,
+        TrainingNotFoundException::class, ExerciseNotFoundException::class,
+        DayOfTrainingNotFoundException::class])
     fun handleEntityNotFoundException(ex: EntityNotFoundException, request: WebRequest) =
             ResponseEntity(ex.message?.let { response(LocalDateTime.now(), it) }, HttpStatus.NOT_FOUND)
 

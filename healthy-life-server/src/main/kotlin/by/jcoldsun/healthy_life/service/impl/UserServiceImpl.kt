@@ -23,4 +23,6 @@ class UserServiceImpl(private val userRepository: UserRepository) : UserService 
 
     override fun delete(id: Long) = userRepository.delete(getById(id))
 
+    override fun loadUserByUsername(username: String?) = username?.let { getByUsername(it) }
+
 }

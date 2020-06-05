@@ -11,13 +11,11 @@ spring:
     url: jdbc:postgresql://localhost:5432/healthy_life
     driver-class-name: org.postgresql.Driver
     username: postgres
-    password: postgres
+    password: root
   # Flyway
   flyway:
     user: postgres
-    password: postgres
+    password: root
     url: jdbc:postgresql://localhost:5432/healthy_life
 
-jwt:
-  secret:
-    key: secretKey
+jwt.secret.key: secretKey

@@ -8,9 +8,9 @@ import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Component
-import java.lang.Exception
-import java.lang.IllegalArgumentException
 import java.time.Instant
 import java.util.*
 import javax.annotation.PostConstruct
@@ -24,7 +24,7 @@ class JwtProvider(private val userService: UserService, private val invalidToken
         const val EXPIRATION_TIME_IN_SECONDS: Long = 86_400_000
     }
 
-    @Value("#{jwt.secret.key}")
+    @Value("\${jwt.secret.key}")
     lateinit var secretKey: String
 
     @PostConstruct
@@ -42,10 +42,10 @@ class JwtProvider(private val userService: UserService, private val invalidToken
                 .compact()
     }
 
-//    fun getAuthentication(token: String?): Authentication {
-//        val userDetails = userService.getById(getUserId(token).toLong())
-//        return UsernamePasswordAuthenticationToken(userDetails, null, userDetails)
-//    }
+    fun getAuthentication(token: String?): Authentication {
+        val userDetails = userService.getById(getUserId(token).toLong())
+        return UsernamePasswordAuthenticationToken(userDetails, userDetails?.password, userDetails?.authorities)
+    }
 
     fun getUserId(token: String?): String = getClaimsFromToken(token).subject
 
@@ -59,7 +59,7 @@ class JwtProvider(private val userService: UserService, private val invalidToken
         else null
     }
 
-    fun validateToken(token: String?): Boolean {
+    fun isValidateToken(token: String?): Boolean {
         try {
             return !isTokenExpired(token) && !invalidTokenService.isExists(token)
         } catch (ex: Exception) {

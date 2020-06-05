@@ -39,6 +39,13 @@ data class User(
                 inverseJoinColumns = [JoinColumn(name = "achievement_id")]
         )
         var achievements: List<Achievement> = arrayListOf(),
+        @ManyToMany(targetEntity = Training::class)
+        @JoinTable(
+                name = "users_trainings",
+                joinColumns = [JoinColumn(name = "user_id")],
+                inverseJoinColumns = [JoinColumn(name = "training_id")]
+        )
+        var trainings: MutableList<Training> = arrayListOf(),
         @OneToMany(mappedBy = "user", targetEntity = Record::class)
         var records: List<Record> = arrayListOf()) : UserDetails {
 

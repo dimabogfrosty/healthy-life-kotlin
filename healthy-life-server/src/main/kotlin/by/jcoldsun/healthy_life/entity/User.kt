@@ -1,7 +1,11 @@
 package by.jcoldsun.healthy_life.entity
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.core.userdetails.UserDetails
 import java.time.LocalDate
+import java.util.stream.Collectors.toList
 import javax.persistence.*
 
 @Entity
@@ -12,8 +16,8 @@ data class User(
         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
         @SequenceGenerator(name = "user_id_seq", sequenceName = "users_id_seq", allocationSize = 1)
         var id: Long? = null,
-        var username: String = "",
-        var password: String = "",
+        private var username: String = "",
+        private var password: String = "",
         @Column(name = "first_name") var firstName: String = "",
         @Column(name = "last_name") var lastName: String = "",
         @Column(name = "birth_date") var birthDate: LocalDate? = null,
@@ -35,11 +39,21 @@ data class User(
                 inverseJoinColumns = [JoinColumn(name = "achievement_id")]
         )
         var achievements: List<Achievement> = arrayListOf(),
-        @ManyToMany(targetEntity = Training::class)
-        @JoinTable(
-                name = "users_trainings",
-                joinColumns = [JoinColumn(name = "user_id")],
-                inverseJoinColumns = [JoinColumn(name = "training_id")]
-        )
-        var trainings: MutableList<Training> = arrayListOf(),
-        @OneToMany(mappedBy = "user", targetEntity = Record::class) var records: List<Record> = arrayListOf())
+        @OneToMany(mappedBy = "user", targetEntity = Record::class)
+        var records: List<Record> = arrayListOf()) : UserDetails {
+
+    override fun getAuthorities(): MutableCollection<out GrantedAuthority> = roles.stream()
+            .map { role -> SimpleGrantedAuthority(role.name) }.collect(toList())
+
+    override fun isEnabled() = true
+
+    override fun getUsername() = username
+
+    override fun getPassword() = password
+
+    override fun isCredentialsNonExpired() = true
+
+    override fun isAccountNonExpired() = true
+
+    override fun isAccountNonLocked() = true
+}

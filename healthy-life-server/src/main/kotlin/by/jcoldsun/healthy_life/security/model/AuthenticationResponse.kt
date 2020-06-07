@@ -1,3 +1,3 @@
 package by.jcoldsun.healthy_life.security.model
 
-class AuthenticationResponse(val token: String)
+class AuthenticationResponse(val  id: Long, val token: String)

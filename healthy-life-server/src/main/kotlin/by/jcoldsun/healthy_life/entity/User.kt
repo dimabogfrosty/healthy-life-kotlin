@@ -1,6 +1,7 @@
 package by.jcoldsun.healthy_life.entity
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonProperty
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
@@ -10,7 +11,6 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "users")
-@JsonIgnoreProperties(value = ["password"])
 data class User(
         @Id
         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
@@ -49,9 +49,11 @@ data class User(
         @OneToMany(mappedBy = "user", targetEntity = Record::class)
         var records: List<Record> = arrayListOf()) : UserDetails {
 
+    @JsonIgnore
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = roles.stream()
             .map { role -> SimpleGrantedAuthority(role.name) }.collect(toList())
 
+    @JsonIgnore
     override fun isEnabled() = true
 
     override fun getUsername() = username
@@ -60,15 +62,20 @@ data class User(
         this.username = username
     }
 
+    @JsonIgnore
     override fun getPassword() = password
 
+    @JsonProperty
     fun setPassword(password: String) {
         this.password = password
     }
 
+    @JsonIgnore
     override fun isCredentialsNonExpired() = true
 
+    @JsonIgnore
     override fun isAccountNonExpired() = true
 
+    @JsonIgnore
     override fun isAccountNonLocked() = true
 }

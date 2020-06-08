@@ -63,7 +63,7 @@ val integrationTest = task<Test>("integrationTest") {
 
     testClassesDirs = sourceSets["integrationTest"].output.classesDirs
     classpath = sourceSets["integrationTest"].runtimeClasspath
-    shouldRunAfter("test")
+//    shouldRunAfter("test")
 }
 
-tasks.check { dependsOn(integrationTest) }
+//tasks.check { dependsOn(integrationTest) }

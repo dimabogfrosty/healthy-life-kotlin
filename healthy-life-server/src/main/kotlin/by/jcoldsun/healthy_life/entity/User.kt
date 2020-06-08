@@ -56,7 +56,15 @@ data class User(
 
     override fun getUsername() = username
 
+    fun setUsername(username: String) {
+        this.username = username
+    }
+
     override fun getPassword() = password
+
+    fun setPassword(password: String) {
+        this.password = password
+    }
 
     override fun isCredentialsNonExpired() = true
 

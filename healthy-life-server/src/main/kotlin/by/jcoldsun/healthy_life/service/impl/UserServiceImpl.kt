@@ -5,8 +5,10 @@ import by.jcoldsun.healthy_life.exception.entity.UserNotFoundException
 import by.jcoldsun.healthy_life.repository.UserRepository
 import by.jcoldsun.healthy_life.service.UserService
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
+@Transactional(readOnly = true)
 class UserServiceImpl(private val userRepository: UserRepository) : UserService {
     override fun getByUsername(username: String) = userRepository.findByUsername(username)
             ?: throw UserNotFoundException("User with username = $username does not exist")
@@ -19,8 +21,10 @@ class UserServiceImpl(private val userRepository: UserRepository) : UserService 
     override fun getById(id: Long): User = userRepository.findById(id)
             .orElseThrow { UserNotFoundException("User with id = $id does not exist") }
 
+    @Transactional
     override fun save(entity: User) = userRepository.saveAndFlush(entity)
 
+    @Transactional
     override fun delete(id: Long) = userRepository.delete(getById(id))
 
     override fun loadUserByUsername(username: String?) = username?.let { getByUsername(it) }

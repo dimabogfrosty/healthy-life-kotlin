@@ -5,8 +5,10 @@ import by.jcoldsun.healthy_life.exception.entity.ExerciseNotFoundException
 import by.jcoldsun.healthy_life.repository.ExerciseRepository
 import by.jcoldsun.healthy_life.service.ExerciseService
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
+@Transactional(readOnly = true)
 class ExerciseServiceImpl(private val exerciseRepository: ExerciseRepository) : ExerciseService {
 
     override fun getByName(name: String) = exerciseRepository.findByName(name)
@@ -17,7 +19,9 @@ class ExerciseServiceImpl(private val exerciseRepository: ExerciseRepository) : 
     override fun getById(id: Long): Exercise = exerciseRepository.findById(id)
             .orElseThrow { ExerciseNotFoundException("Exercise with id = $id does not exist") }
 
+    @Transactional
     override fun save(entity: Exercise) = exerciseRepository.saveAndFlush(entity)
 
+    @Transactional
     override fun delete(id: Long) = exerciseRepository.delete(getById(id))
 }

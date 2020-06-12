@@ -13,6 +13,10 @@ class UserController(private val userService: UserService) {
     @GetMapping
     fun getAllUsers() = ResponseEntity(userService.getAll(), HttpStatus.OK)
 
+    @GetMapping(params = ["page", "size"])
+    fun getAllUsersWithPagination(@RequestParam page: Int, @RequestParam size: Int) =
+            ResponseEntity(userService.getAllUserWithPagination(page - 1, size), HttpStatus.OK)
+
     @GetMapping("/{id:\\d+}")
     fun getUserById(@PathVariable id: Long) = ResponseEntity(userService.getById(id), HttpStatus.OK)
 

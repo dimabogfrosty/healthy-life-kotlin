@@ -5,6 +5,8 @@ import by.jcoldsun.healthy_life.exception.entity.UserNotFoundException
 import by.jcoldsun.healthy_life.repository.RoleRepository
 import by.jcoldsun.healthy_life.repository.UserRepository
 import by.jcoldsun.healthy_life.service.UserService
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -19,6 +21,10 @@ class UserServiceImpl(private val userRepository: UserRepository,
             ?: throw UserNotFoundException("User with email = $email does not exist")
 
     override fun getAll(): MutableList<User> = userRepository.findAll()
+
+    override fun getAllUserWithPagination(page: Int, size: Int): List<User> =
+            userRepository.findAll(PageRequest.of(page, size)).toList()
+
 
     override fun getById(id: Long): User = userRepository.findById(id)
             .orElseThrow { UserNotFoundException("User with id = $id does not exist") }

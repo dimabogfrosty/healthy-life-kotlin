@@ -13,6 +13,7 @@ data class Training(
         var id: Long? = null,
         var name: String? = null,
         var description: String? = null,
+        @Column(name = "img_src") var imageSource: String? = null,
         @ManyToMany(mappedBy = "trainings", targetEntity = User::class) var users: MutableList<User> = arrayListOf(),
         @OneToMany(mappedBy = "training", targetEntity = DayOfTraining::class)
         var daysOfTrainings: MutableList<DayOfTraining> = arrayListOf())

@@ -21,6 +21,7 @@ data class User(
         @Column(name = "first_name") var firstName: String = "",
         @Column(name = "last_name") var lastName: String = "",
         @Column(name = "birth_date") var birthDate: LocalDate? = null,
+        @Column(name = "img_src") var imageSource: String? = null,
         var email: String = "",
         var gender: String = "",
         var weight: Double = 0.0,

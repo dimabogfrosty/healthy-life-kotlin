@@ -1,0 +1,2 @@
+ALTER TABLE trainings
+ADD COLUMN img_src VARCHAR(255)

@@ -13,6 +13,8 @@ class AchievementServiceImpl(private val achievementRepository: AchievementRepos
     override fun getAchievementByName(name: String) = achievementRepository.findByName(name)
             ?: throw AchievementNotFoundException("Achievement with name = $name does not exist")
 
+    override fun getUserAchievements(userId: Long) = achievementRepository.findAchievementsByUsersId(userId)
+
     override fun getAll(): MutableList<Achievement> = achievementRepository.findAll()
 
     override fun getById(id: Long): Achievement = achievementRepository.findById(id)

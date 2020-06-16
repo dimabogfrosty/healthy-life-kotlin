@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface AchievementRepository : JpaRepository<Achievement, Long> {
     fun findByName(name: String): Achievement?
+    fun findAchievementsByUsersId(id: Long): List<Achievement>
 }

@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = true)
 class RecordServiceImpl(private val recordRepository: RecordRepository) : RecordService {
+    override fun getUserRecords(userId: Long) = recordRepository.findRecordsByUsersId(userId)
+
     override fun getAll(): MutableList<Record> = recordRepository.findAll()
 
     override fun getById(id: Long): Record = recordRepository.findById(id)

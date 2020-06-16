@@ -1,6 +1,7 @@
 package by.jcoldsun.healthy_life.entity
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -11,6 +12,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "users")
+@JsonIgnoreProperties(value = ["roles", "achievements", "trainings", "records"])
 data class User(
         @Id
         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")

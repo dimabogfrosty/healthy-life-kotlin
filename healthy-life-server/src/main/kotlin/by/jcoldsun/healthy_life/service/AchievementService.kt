@@ -4,4 +4,5 @@ import by.jcoldsun.healthy_life.entity.Achievement
 
 interface AchievementService : BaseService<Achievement> {
     fun getAchievementByName(name: String): Achievement?
+    fun getUserAchievements(userId: Long): List<Achievement>
 }

@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface  TrainingRepository : JpaRepository<Training, Long> {
     fun findByName(name: String): Training?
+    fun findTrainingsByUsersId(id: Long): List<Training>
 }

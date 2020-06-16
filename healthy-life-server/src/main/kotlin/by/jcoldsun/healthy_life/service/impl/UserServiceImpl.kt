@@ -2,19 +2,18 @@ package by.jcoldsun.healthy_life.service.impl
 
 import by.jcoldsun.healthy_life.entity.User
 import by.jcoldsun.healthy_life.exception.entity.UserNotFoundException
-import by.jcoldsun.healthy_life.repository.RoleRepository
 import by.jcoldsun.healthy_life.repository.UserRepository
+import by.jcoldsun.healthy_life.service.RoleService
 import by.jcoldsun.healthy_life.service.UserService
 import by.jcoldsun.healthy_life.service.model.UserPagination
 import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional(readOnly = true)
 class UserServiceImpl(private val userRepository: UserRepository,
-                      private val roleRepository: RoleRepository) : UserService {
+                      private val roleService: RoleService) : UserService {
     override fun getByUsername(username: String) = userRepository.findByUsername(username)
             ?: throw UserNotFoundException("User with username = $username does not exist")
 
@@ -33,7 +32,7 @@ class UserServiceImpl(private val userRepository: UserRepository,
     @Transactional
     override fun save(entity: User): User {
         if (entity.roles.isEmpty()) {
-            entity.roles = arrayListOf(roleRepository.findByName("USER"))
+            entity.roles = arrayListOf(roleService.getByName("USER"))
         }
         return userRepository.saveAndFlush(entity)
     }

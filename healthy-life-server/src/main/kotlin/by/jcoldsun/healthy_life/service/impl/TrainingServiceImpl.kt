@@ -14,6 +14,8 @@ class TrainingServiceImpl(private val trainingRepository: TrainingRepository) : 
     override fun getByName(name: String) = trainingRepository.findByName(name)
             ?: throw TrainingNotFoundException("Training with name = $name does not exist")
 
+    override fun getUserTrainings(userId: Long) = trainingRepository.findTrainingsByUsersId(userId)
+
     override fun getAll(): MutableList<Training> = trainingRepository.findAll()
 
     override fun getById(id: Long): Training = trainingRepository.findById(id)

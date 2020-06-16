@@ -9,4 +9,5 @@ import java.time.LocalDate
 interface RecordRepository : JpaRepository<Record, Long> {
     fun findRecordsByUserIdOrderByRunDate(userId: Long): List<Record>
     fun findRecordsByUserIdAndRunDateBetweenOrderByRunDate(userId: Long, from: LocalDate, to: LocalDate): List<Record>
+    fun findRecordsByUsersId(id: Long): List<Record>
 }

@@ -1,10 +1,12 @@
 package by.jcoldsun.healthy_life.entity
 
 import com.fasterxml.jackson.annotation.JsonBackReference
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import javax.persistence.*
 
 @Entity
 @Table(name = "training_days")
+@JsonIgnoreProperties(value = ["exercises"])
 data class DayOfTraining(
         @Id
         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "training_day_id_seq")

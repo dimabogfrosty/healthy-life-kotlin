@@ -11,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class RoleServiceImpl(private val roleRepository: RoleRepository) : RoleService {
     override fun getByName(name: String) = roleRepository.findByName(name)
+            ?: throw RoleNotFoundException("Role with name = $name does not exist")
+
+    override fun getRolesByUser(id: Long) = roleRepository.findRolesByUsersId(id)
 
     override fun getAll(): MutableList<Role> = roleRepository.findAll()
 

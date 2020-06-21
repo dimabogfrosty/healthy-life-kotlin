@@ -41,6 +41,7 @@ class UserServiceImpl(private val userRepository: UserRepository,
         return roleService.getRolesByUser(userId)
     }
 
+    @Transactional
     override fun addAchievement(userId: Long, achievementId: Long): List<Achievement> {
         val achievement = achievementService.getById(achievementId)
         val user = this.getById(userId)
@@ -49,6 +50,7 @@ class UserServiceImpl(private val userRepository: UserRepository,
         return achievementService.getUserAchievements(userId)
     }
 
+    @Transactional
     override fun addTraining(userId: Long, trainingId: Long): List<Training> {
         val training = trainingService.getById(trainingId)
         val user = this.getById(userId)

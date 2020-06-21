@@ -16,5 +16,7 @@ data class Training(
         @Column(name = "img_src") var imageSource: String? = null,
         @ManyToMany(mappedBy = "trainings", targetEntity = User::class) var users: MutableList<User> = arrayListOf(),
         @OneToMany(mappedBy = "training", targetEntity = DayOfTraining::class)
-        var daysOfTrainings: MutableList<DayOfTraining> = arrayListOf())
+        var daysOfTrainings: MutableList<DayOfTraining> = arrayListOf()) {
+        fun getTrainingDays() = daysOfTrainings.size
+}
 

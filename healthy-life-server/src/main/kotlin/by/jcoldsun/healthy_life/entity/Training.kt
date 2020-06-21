@@ -18,5 +18,6 @@ data class Training(
         @OneToMany(mappedBy = "training", targetEntity = DayOfTraining::class)
         var daysOfTrainings: MutableList<DayOfTraining> = arrayListOf()) {
         fun getTrainingDays() = daysOfTrainings.size
+        fun getFollowersCount() = users.size
 }
 

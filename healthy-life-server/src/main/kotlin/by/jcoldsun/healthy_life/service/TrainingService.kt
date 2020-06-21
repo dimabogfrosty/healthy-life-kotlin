@@ -8,4 +8,5 @@ interface TrainingService : BaseService<Training> {
     fun getByName(name: String): Training
     fun getUserTrainings(userId: Long): List<Training>
     fun getTrainingDayExercises(trainingId: Long, day: Int): List<Exercise>
+    fun getUserOwnTraining(id: Long): List<Training>
 }

@@ -6,7 +6,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "training_days")
-@JsonIgnoreProperties(value = ["training", "exercises"])
+@JsonIgnoreProperties(value = ["training"])
 data class DayOfTraining(
         @Id
         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "training_day_id_seq")

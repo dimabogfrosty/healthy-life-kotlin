@@ -23,6 +23,8 @@ class TrainingServiceImpl(private val trainingRepository: TrainingRepository,
     override fun getTrainingDayExercises(trainingId: Long, day: Int)
             = dayOfTrainingService.getDayOfTrainingByTrainingIdAndDay(trainingId, day).exercises
 
+    override fun getUserOwnTraining(id: Long) = trainingRepository.findTrainingsByAuthor(id)
+
     override fun getAll(): MutableList<Training> = trainingRepository.findAll()
 
     override fun getById(id: Long): Training = trainingRepository.findById(id)

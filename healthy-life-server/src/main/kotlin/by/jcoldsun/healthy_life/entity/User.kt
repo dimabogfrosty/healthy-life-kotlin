@@ -34,14 +34,14 @@ data class User(
                 joinColumns = [JoinColumn(name = "user_id")],
                 inverseJoinColumns = [JoinColumn(name = "role_id")]
         )
-        var roles: List<Role> = arrayListOf(),
+        var roles: MutableList<Role> = arrayListOf(),
         @ManyToMany(targetEntity = Achievement::class)
         @JoinTable(
                 name = "users_achievements",
                 joinColumns = [JoinColumn(name = "user_id")],
                 inverseJoinColumns = [JoinColumn(name = "achievement_id")]
         )
-        var achievements: List<Achievement> = arrayListOf(),
+        var achievements: MutableList<Achievement> = arrayListOf(),
         @ManyToMany(targetEntity = Training::class)
         @JoinTable(
                 name = "users_trainings",
@@ -81,4 +81,14 @@ data class User(
 
     @JsonIgnore
     override fun isAccountNonLocked() = true
+
+    fun addRole(role: Role) {
+        this.roles.add(role)
+        role.users.add(this)
+    }
+
+    fun addAchievement(achievement: Achievement) {
+        this.achievements.add(achievement)
+        achievement.users.add(this)
+    }
 }

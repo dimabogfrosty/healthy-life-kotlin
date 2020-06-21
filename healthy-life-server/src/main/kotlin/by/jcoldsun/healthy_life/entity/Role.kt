@@ -12,4 +12,4 @@ data class Role(
         @SequenceGenerator(name = "role_id_seq", sequenceName = "roles_id_seq", allocationSize = 1)
         var id: Long? = null,
         var name: String? = "USER",
-        @ManyToMany(mappedBy = "roles", targetEntity = User::class) var users: List<User> = arrayListOf())
+        @ManyToMany(mappedBy = "roles", targetEntity = User::class) var users: MutableList<User> = arrayListOf())

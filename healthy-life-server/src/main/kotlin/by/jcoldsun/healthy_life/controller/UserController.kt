@@ -1,5 +1,6 @@
 package by.jcoldsun.healthy_life.controller
 
+import by.jcoldsun.healthy_life.entity.Role
 import by.jcoldsun.healthy_life.entity.User
 import by.jcoldsun.healthy_life.service.*
 import org.springframework.http.HttpStatus
@@ -35,11 +36,19 @@ class UserController(private val userService: UserService,
     @GetMapping("/{id:\\d+}/trainings")
     fun getUserTrainings(@PathVariable id: Long) = ResponseEntity(trainingService.getUserTrainings(id), HttpStatus.OK)
 
-    @PostMapping
+    @PostMapping("/registration")
     fun createUser(@RequestBody user: User) = ResponseEntity(userService.save(user), HttpStatus.CREATED)
 
     @PutMapping
     fun updateUser(@RequestBody user: User) = ResponseEntity(userService.save(user), HttpStatus.OK)
+
+    @PutMapping("/{userId:\\d+}/roles/{roleId:\\d+}")
+    fun updateUserRole(@PathVariable userId: Long, @PathVariable roleId: Long)
+            = ResponseEntity(userService.addRole(userId, roleId), HttpStatus.OK)
+
+    @PutMapping("/{userId:\\d+}/achievements/{achievementId:\\d+}")
+    fun updateUserAchievement(@PathVariable userId: Long, achievementId: Long)
+            = ResponseEntity(userService.addAchievement(userId, achievementId), HttpStatus.OK)
 
     @DeleteMapping("/{id:\\d+}")
     fun deleteUser(@PathVariable id: Long) = ResponseEntity(userService.delete(id), HttpStatus.OK)

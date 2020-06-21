@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController
 class ReportController(private val reportService: ReportService, private val userService: UserService) {
 
     @GetMapping
-    fun createReport(@PathVariable id: Long) = ResponseEntity(reportService.createReport(userService.getById(id)!!), HttpStatus.OK)
+    fun createReport(@PathVariable id: Long) = ResponseEntity(reportService.createReport(userService.getById(id)), HttpStatus.OK)
 
     @GetMapping("/weeks")
-    fun createReportByWeeks(@PathVariable id: Long) = ResponseEntity(reportService.createReportByWeeks(userService.getById(id)!!), HttpStatus.OK)
+    fun createReportByWeeks(@PathVariable id: Long) = ResponseEntity(reportService.createReportByWeeks(userService.getById(id)), HttpStatus.OK)
 
     @GetMapping("/months")
-    fun createReportByMonths(@PathVariable id: Long) = ResponseEntity(reportService.createReportByMonths(userService.getById(id)!!), HttpStatus.OK)
+    fun createReportByMonths(@PathVariable id: Long) = ResponseEntity(reportService.createReportByMonths(userService.getById(id)), HttpStatus.OK)
 }

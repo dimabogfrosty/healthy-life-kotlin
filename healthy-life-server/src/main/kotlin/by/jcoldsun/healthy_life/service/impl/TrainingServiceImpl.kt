@@ -1,8 +1,6 @@
 package by.jcoldsun.healthy_life.service.impl
 
-import by.jcoldsun.healthy_life.entity.Exercise
 import by.jcoldsun.healthy_life.entity.Training
-import by.jcoldsun.healthy_life.exception.entity.DayOfTrainingNotFoundException
 import by.jcoldsun.healthy_life.exception.entity.TrainingNotFoundException
 import by.jcoldsun.healthy_life.repository.TrainingRepository
 import by.jcoldsun.healthy_life.service.DayOfTrainingService
@@ -23,7 +21,7 @@ class TrainingServiceImpl(private val trainingRepository: TrainingRepository,
     override fun getTrainingDayExercises(trainingId: Long, day: Int)
             = dayOfTrainingService.getDayOfTrainingByTrainingIdAndDay(trainingId, day).exercises
 
-    override fun getUserOwnTraining(id: Long) = trainingRepository.findTrainingsByAuthor(id)
+    override fun getUserOwnTraining(id: Long) = trainingRepository.findTrainingsByAuthorId(id)
 
     override fun getAll(): MutableList<Training> = trainingRepository.findAll()
 

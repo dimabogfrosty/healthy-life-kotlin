@@ -12,7 +12,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "users")
-@JsonIgnoreProperties(value = ["roles", "achievements", "trainings", "records"])
+@JsonIgnoreProperties(value = ["roles", "achievements", "trainings", "records", "ownTrainings"])
 data class User(
         @Id
         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
@@ -50,7 +50,9 @@ data class User(
         )
         var trainings: MutableList<Training> = arrayListOf(),
         @OneToMany(mappedBy = "user", targetEntity = Record::class)
-        var records: List<Record> = arrayListOf()) : UserDetails {
+        var records: List<Record> = arrayListOf(),
+        @OneToMany(mappedBy = "author", targetEntity = Training::class)
+        var ownTrainings: MutableList<Training> = arrayListOf()) : UserDetails {
 
     @JsonIgnore
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> = roles.stream()

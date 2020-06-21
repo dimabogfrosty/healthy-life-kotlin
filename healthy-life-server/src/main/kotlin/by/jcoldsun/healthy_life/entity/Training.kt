@@ -5,7 +5,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "trainings")
-@JsonIgnoreProperties(value = ["users", "daysOfTrainings"])
+@JsonIgnoreProperties(value = ["users"])
 data class Training(
         @Id
         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "training_id_seq")
@@ -16,7 +16,9 @@ data class Training(
         @Column(name = "img_src") var imageSource: String? = null,
         @ManyToMany(mappedBy = "trainings", targetEntity = User::class) var users: MutableList<User> = arrayListOf(),
         @OneToMany(mappedBy = "training", targetEntity = DayOfTraining::class)
-        var daysOfTrainings: MutableList<DayOfTraining> = arrayListOf()) {
+        var daysOfTrainings: MutableList<DayOfTraining> = arrayListOf(),
+        @ManyToOne(targetEntity = User::class)
+        @JoinColumn(name = "author") var author: User? = null) {
         fun getTrainingDays() = daysOfTrainings.size
         fun getFollowersCount() = users.size
 }

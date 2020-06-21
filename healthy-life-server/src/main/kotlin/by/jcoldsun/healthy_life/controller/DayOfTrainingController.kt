@@ -1,7 +1,7 @@
 package by.jcoldsun.healthy_life.controller
 
 import by.jcoldsun.healthy_life.entity.DayOfTraining
-import by.jcoldsun.healthy_life.service.impl.DayOfTrainingService
+import by.jcoldsun.healthy_life.service.DayOfTrainingService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

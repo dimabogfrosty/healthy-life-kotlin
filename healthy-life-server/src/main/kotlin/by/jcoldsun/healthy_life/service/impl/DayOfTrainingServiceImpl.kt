@@ -9,7 +9,11 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional(readOnly = true)
-class DayOfTrainingService(private val dayOfTrainingRepository: DayOfTrainingRepository) : DayOfTrainingService {
+class DayOfTrainingServiceImpl(private val dayOfTrainingRepository: DayOfTrainingRepository) : DayOfTrainingService {
+
+    override fun getDayOfTrainingByTrainingIdAndDay(trainingId: Long, day: Int)
+            = dayOfTrainingRepository.findDayOfTrainingByTrainingIdAndDay(trainingId, day)
+            ?: throw DayOfTrainingNotFoundException("day of training with trainingId = $trainingId and day = $day does not exist\"")
 
     override fun getAll(): MutableList<DayOfTraining> = dayOfTrainingRepository.findAll()
 

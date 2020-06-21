@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface DayOfTrainingRepository : JpaRepository<DayOfTraining, Long>
+interface DayOfTrainingRepository : JpaRepository<DayOfTraining, Long> {
+    fun findDayOfTrainingByTrainingIdAndDay(trainingId: Long, day: Int): DayOfTraining?
+}

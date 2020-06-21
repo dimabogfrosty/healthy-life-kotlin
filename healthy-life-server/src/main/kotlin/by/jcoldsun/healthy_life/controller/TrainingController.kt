@@ -16,6 +16,10 @@ class TrainingController(private val trainingService: TrainingService) {
     @GetMapping("/{id:\\d+}")
     fun getTrainingById(@PathVariable id: Long) = ResponseEntity(trainingService.getById(id), HttpStatus.OK)
 
+    @GetMapping("/{trainingId:\\d+}/days/{day:\\d+}/exercises")
+    fun getTrainingDayExercises(@PathVariable trainingId: Long, @PathVariable day: Int)
+            = ResponseEntity(trainingService.getTrainingDayExercises(trainingId, day), HttpStatus.OK)
+
     @PostMapping
     fun crateTraining(@RequestBody training: Training)
             = ResponseEntity(trainingService.save(training), HttpStatus.CREATED)

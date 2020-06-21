@@ -50,6 +50,10 @@ class UserController(private val userService: UserService,
     fun updateUserAchievement(@PathVariable userId: Long, achievementId: Long)
             = ResponseEntity(userService.addAchievement(userId, achievementId), HttpStatus.OK)
 
+    @PutMapping("/{userId:\\d+}/trainings/{trainingId:\\d+}")
+    fun updateUserTraining(@PathVariable userId: Long, trainingId: Long)
+            = ResponseEntity(userService.addTraining(userId, trainingId), HttpStatus.OK)
+
     @DeleteMapping("/{id:\\d+}")
     fun deleteUser(@PathVariable id: Long) = ResponseEntity(userService.delete(id), HttpStatus.OK)
 

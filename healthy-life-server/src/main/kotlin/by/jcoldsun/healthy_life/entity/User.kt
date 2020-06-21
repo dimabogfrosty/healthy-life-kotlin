@@ -91,4 +91,9 @@ data class User(
         this.achievements.add(achievement)
         achievement.users.add(this)
     }
+
+    fun addTraining(training: Training) {
+        this.trainings.add(training)
+        training.users.add(this)
+    }
 }

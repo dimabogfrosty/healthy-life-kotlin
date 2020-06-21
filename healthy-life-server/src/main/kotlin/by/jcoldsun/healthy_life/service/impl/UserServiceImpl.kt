@@ -2,11 +2,13 @@ package by.jcoldsun.healthy_life.service.impl
 
 import by.jcoldsun.healthy_life.entity.Achievement
 import by.jcoldsun.healthy_life.entity.Role
+import by.jcoldsun.healthy_life.entity.Training
 import by.jcoldsun.healthy_life.entity.User
 import by.jcoldsun.healthy_life.exception.entity.UserNotFoundException
 import by.jcoldsun.healthy_life.repository.UserRepository
 import by.jcoldsun.healthy_life.service.AchievementService
 import by.jcoldsun.healthy_life.service.RoleService
+import by.jcoldsun.healthy_life.service.TrainingService
 import by.jcoldsun.healthy_life.service.UserService
 import by.jcoldsun.healthy_life.service.model.UserPagination
 import org.springframework.data.domain.PageRequest
@@ -17,7 +19,8 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class UserServiceImpl(private val userRepository: UserRepository,
                       private val roleService: RoleService,
-                      private val achievementService: AchievementService) : UserService {
+                      private val achievementService: AchievementService,
+                      private val trainingService: TrainingService) : UserService {
     override fun getByUsername(username: String) = userRepository.findByUsername(username)
             ?: throw UserNotFoundException("User with username = $username does not exist")
 
@@ -44,6 +47,14 @@ class UserServiceImpl(private val userRepository: UserRepository,
         user.addAchievement(achievement)
         this.save(user)
         return achievementService.getUserAchievements(userId)
+    }
+
+    override fun addTraining(userId: Long, trainingId: Long): List<Training> {
+        val training = trainingService.getById(trainingId)
+        val user = this.getById(userId)
+        user.addTraining(training)
+        this.save(user)
+        return trainingService.getUserTrainings(userId)
     }
 
     override fun getById(id: Long): User = userRepository.findById(id)

@@ -101,6 +101,8 @@ class UserServiceImpl(private val userRepository: UserRepository,
         return this.save(user).achievements
     }
 
+    override fun getUserAchievementsWithScore(userId: Long) = achievementService.getAchievementsWithScore(getById(userId))
+
     override fun getById(id: Long): User = userRepository.findById(id)
             .orElseThrow { UserNotFoundException("User with id = $id does not exist") }
 

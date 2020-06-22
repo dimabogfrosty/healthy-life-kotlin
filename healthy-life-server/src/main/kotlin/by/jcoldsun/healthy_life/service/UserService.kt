@@ -4,6 +4,7 @@ import by.jcoldsun.healthy_life.entity.Achievement
 import by.jcoldsun.healthy_life.entity.Role
 import by.jcoldsun.healthy_life.entity.Training
 import by.jcoldsun.healthy_life.entity.User
+import by.jcoldsun.healthy_life.service.model.AchievementScore
 import by.jcoldsun.healthy_life.service.model.UserPagination
 import org.springframework.security.core.userdetails.UserDetailsService
 
@@ -18,4 +19,5 @@ interface UserService : BaseService<User>, UserDetailsService {
     fun removeAchievement(userId: Long, achievementId: Long): List<Achievement>
     fun removeTraining(userId: Long, trainingId: Long): List<Training>
     fun refreshUserAchievements(userId: Long): List<Achievement>
+    fun getUserAchievementsWithScore(userId: Long): List<AchievementScore>
 }

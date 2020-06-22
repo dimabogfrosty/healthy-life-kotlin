@@ -6,6 +6,7 @@ import by.jcoldsun.healthy_life.entity.User
 import by.jcoldsun.healthy_life.exception.entity.AchievementNotFoundException
 import by.jcoldsun.healthy_life.repository.AchievementRepository
 import by.jcoldsun.healthy_life.service.AchievementService
+import by.jcoldsun.healthy_life.service.model.AchievementScore
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -21,10 +22,10 @@ class AchievementServiceImpl(private val achievementRepository: AchievementRepos
         return possibleAchievements.filter { achievement -> getAchievementScore(user, achievement) > achievement.goal }
     }
 
-//    override fun getAchievementsWithScore(userId: Long): List<AchievementScore> {
-//        val achievements = getUserAchievements(userId)
-//
-//    }
+    override fun getAchievementsWithScore(user: User): List<AchievementScore> {
+        return getUserAchievements(user.id!!)
+                .map { achievement -> AchievementScore(achievement, getAchievementScore(user, achievement)) }
+    }
 
     override fun getAll(): MutableList<Achievement> = achievementRepository.findAll()
 

@@ -1,0 +1,10 @@
+ALTER TABLE trainings DROP COLUMN measure VARCHAR(255);
+
+ALTER TABLE exercises
+ADD COLUMN measure VARCHAR(255)
+;
+
+ALTER TABLE achievements
+ADD COLUMN measure VARCHAR(255)
+ADD COLUMN goal DECIMAL
+;

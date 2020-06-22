@@ -16,6 +16,7 @@ data class Exercise(
         @Column(name = "image_src") var imageSource: String? = null,
         @Column(name = "number") var count: Int = 0, // number of times or distance
         var reiteration: Int = 0, // number of repetitions
+        var measure: String? = null,
         @ManyToMany(mappedBy = "exercises", targetEntity = DayOfTraining::class)
         var daysOfTraining: MutableList<DayOfTraining> = arrayListOf()
 )

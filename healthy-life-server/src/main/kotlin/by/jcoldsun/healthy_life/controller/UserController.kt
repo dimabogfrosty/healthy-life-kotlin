@@ -58,10 +58,17 @@ class UserController(private val userService: UserService,
     fun updateUserAchievement(@PathVariable userId: Long, achievementId: Long) = ResponseEntity(userService.addAchievement(userId, achievementId), HttpStatus.OK)
 
     @PutMapping("/{userId:\\d+}/trainings/{trainingId:\\d+}")
-    fun updateUserTraining(@PathVariable userId: Long, trainingId: Long)
-            = ResponseEntity(userService.addTraining(userId, trainingId), HttpStatus.OK)
+    fun updateUserTraining(@PathVariable userId: Long, trainingId: Long) = ResponseEntity(userService.addTraining(userId, trainingId), HttpStatus.OK)
 
     @DeleteMapping("/{id:\\d+}")
     fun deleteUser(@PathVariable id: Long) = ResponseEntity(userService.delete(id), HttpStatus.OK)
 
+    @DeleteMapping("/{userId:\\d+}/roles/{roleId:\\d+}")
+    fun deleteUserRole(@PathVariable userId: Long, @PathVariable roleId: Long) = ResponseEntity(userService.removeRole(userId, roleId), HttpStatus.OK)
+
+    @DeleteMapping("/{userId:\\d+}/achievements/{achievementId:\\d+}")
+    fun deleteUserAchievement(@PathVariable userId: Long, achievementId: Long) = ResponseEntity(userService.removeAchievement(userId, achievementId), HttpStatus.OK)
+
+    @DeleteMapping("/{userId:\\d+}/trainings/{trainingId:\\d+}")
+    fun deleteUserTraining(@PathVariable userId: Long, trainingId: Long) = ResponseEntity(userService.removeTraining(userId, trainingId), HttpStatus.OK)
 }

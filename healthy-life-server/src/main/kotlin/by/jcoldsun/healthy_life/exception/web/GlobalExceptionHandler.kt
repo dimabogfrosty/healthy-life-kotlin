@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.context.request.WebRequest
 import java.time.LocalDateTime
-import javax.persistence.EntityNotFoundException
 
 @ControllerAdvice
 class GlobalExceptionHandler {
 
-    @ExceptionHandler(value = [UserNotFoundException::class, RoleNotFoundException::class,
-        RecordNotFoundException::class, AchievementNotFoundException::class,
-        TrainingNotFoundException::class, ExerciseNotFoundException::class,
+    @ExceptionHandler(value = [
+        UserNotFoundException::class,
+        RoleNotFoundException::class,
+        RecordNotFoundException::class,
+        AchievementNotFoundException::class,
+        TrainingNotFoundException::class,
+        ExerciseNotFoundException::class,
         DayOfTrainingNotFoundException::class])
-    fun handleEntityNotFoundException(ex: EntityNotFoundException, request: WebRequest) =
-            ResponseEntity(ex.message?.let { response(LocalDateTime.now(), it) }, HttpStatus.NOT_FOUND)
-
-    private fun response(timestamp: Any, message: Any): ExceptionResponse = ExceptionResponse(timestamp, message)
+    fun handleEntityNotFoundException(ex: Exception, request: WebRequest) = ResponseEntity(ExceptionResponse(LocalDateTime.now(), ex.message!!), HttpStatus.NOT_FOUND)
 }

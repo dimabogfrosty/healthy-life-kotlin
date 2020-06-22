@@ -36,27 +36,60 @@ class UserServiceImpl(private val userRepository: UserRepository,
     override fun addRole(userId: Long, roleId: Long): List<Role> {
         val role = roleService.getById(roleId)
         val user = this.getById(userId)
-        user.addRole(role)
-        this.save(user)
-        return roleService.getRolesByUser(userId)
+        if (user.addRole(role)) {
+            this.save(user)
+            return roleService.getRolesByUser(userId)
+        } else throw Exception("Bad request")
     }
 
     @Transactional
     override fun addAchievement(userId: Long, achievementId: Long): List<Achievement> {
         val achievement = achievementService.getById(achievementId)
         val user = this.getById(userId)
-        user.addAchievement(achievement)
-        this.save(user)
-        return achievementService.getUserAchievements(userId)
+        if (user.addAchievement(achievement)) {
+            this.save(user)
+            return achievementService.getUserAchievements(userId)
+        } else throw Exception("Bad request")
     }
 
     @Transactional
     override fun addTraining(userId: Long, trainingId: Long): List<Training> {
         val training = trainingService.getById(trainingId)
         val user = this.getById(userId)
-        user.addTraining(training)
-        this.save(user)
-        return trainingService.getUserTrainings(userId)
+        if (user.addTraining(training)) {
+            this.save(user)
+            return trainingService.getUserTrainings(userId)
+        } else throw Exception("Bad request")
+    }
+
+    @Transactional
+    override fun removeRole(userId: Long, roleId: Long): List<Role> {
+        val role = roleService.getById(roleId)
+        val user = this.getById(userId)
+        if (user.removeRole(role)) {
+            this.save(user)
+            return roleService.getRolesByUser(userId)
+        } else throw Exception("Bad request")
+    }
+
+    @Transactional
+    override fun removeAchievement(userId: Long, achievementId: Long): List<Achievement> {
+        val achievement = achievementService.getById(achievementId)
+        val user = this.getById(userId)
+        if (user.removeAchievement(achievement)) {
+            this.save(user)
+            return achievementService.getUserAchievements(userId)
+        } else throw Exception("Bad request")
+    }
+
+    @Transactional
+    override fun removeTraining(userId: Long, trainingId: Long): List<Training> {
+        val training = trainingService.getById(trainingId)
+        val user = this.getById(userId)
+        if (user.removeTraining(training)) {
+            this.save(user)
+            return trainingService.getUserTrainings(userId)
+        } else throw Exception("Bad request")
     }
 
     override fun getById(id: Long): User = userRepository.findById(id)

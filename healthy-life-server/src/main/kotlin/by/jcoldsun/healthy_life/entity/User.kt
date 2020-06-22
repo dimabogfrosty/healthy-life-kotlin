@@ -84,18 +84,15 @@ data class User(
     @JsonIgnore
     override fun isAccountNonLocked() = true
 
-    fun addRole(role: Role) {
-        this.roles.add(role)
-        role.users.add(this)
-    }
+    fun addRole(role: Role) = this.roles.add(role) && role.users.add(this)
 
-    fun addAchievement(achievement: Achievement) {
-        this.achievements.add(achievement)
-        achievement.users.add(this)
-    }
+    fun addAchievement(achievement: Achievement) = this.achievements.add(achievement) && achievement.users.add(this)
 
-    fun addTraining(training: Training) {
-        this.trainings.add(training)
-        training.users.add(this)
-    }
+    fun addTraining(training: Training) = this.trainings.add(training) && training.users.add(this)
+
+    fun removeRole(role: Role) = this.roles.remove(role) && role.users.remove(this)
+
+    fun removeAchievement(achievement: Achievement) = this.achievements.remove(achievement) && achievement.users.remove(this)
+
+    fun removeTraining(training: Training) = this.trainings.add(training) && training.users.add(this)
 }

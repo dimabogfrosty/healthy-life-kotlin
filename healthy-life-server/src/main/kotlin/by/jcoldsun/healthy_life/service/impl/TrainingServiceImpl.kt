@@ -29,7 +29,12 @@ class TrainingServiceImpl(private val trainingRepository: TrainingRepository,
             .orElseThrow { TrainingNotFoundException("Training with id = $id does not exist") }
 
     @Transactional
-    override fun save(entity: Training) = trainingRepository.saveAndFlush(entity)
+    override fun save(entity: Training): Training {
+        val training = trainingRepository.saveAndFlush(entity)
+        entity.daysOfTrainings.forEach { day -> day.training = training
+            dayOfTrainingService.save(day) }
+        return training
+    }
 
     @Transactional
     override fun delete(id: Long) = trainingRepository.delete(getById(id))

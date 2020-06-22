@@ -94,5 +94,5 @@ data class User(
 
     fun removeAchievement(achievement: Achievement) = this.achievements.remove(achievement) && achievement.users.remove(this)
 
-    fun removeTraining(training: Training) = this.trainings.add(training) && training.users.add(this)
+    fun removeTraining(training: Training) = this.trainings.remove(training) && training.users.remove(this)
 }

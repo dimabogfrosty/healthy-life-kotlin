@@ -8,7 +8,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "records")
-@JsonIgnoreProperties(value = ["runningTime", "user"])
+@JsonIgnoreProperties(value = ["runningTime"])
 data class Record(
         @Id
         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "record_id_seq")

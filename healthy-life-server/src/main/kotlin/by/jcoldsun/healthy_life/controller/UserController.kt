@@ -39,6 +39,9 @@ class UserController(private val userService: UserService,
     @GetMapping("/{id:\\d+}/own/trainings")
     fun getUserOwnTrainings(@PathVariable id: Long) = ResponseEntity(trainingService.getUserOwnTraining(id), HttpStatus.OK)
 
+    @GetMapping("/{id:\\d+}/achievements/refresh")
+    fun refreshUserAchievements(@PathVariable id: Long) = ResponseEntity(userService.refreshUserAchievements(id), HttpStatus.OK)
+
     @PostMapping("/registration")
     fun createUser(@RequestBody user: User) = ResponseEntity(userService.save(user), HttpStatus.CREATED)
 

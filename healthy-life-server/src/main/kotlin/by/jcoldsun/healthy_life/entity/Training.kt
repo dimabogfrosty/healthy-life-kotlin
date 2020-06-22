@@ -14,6 +14,7 @@ data class Training(
         var name: String? = null,
         var description: String? = null,
         @Column(name = "img_src") var imageSource: String? = null,
+        var measure: String? = null,
         @ManyToMany(mappedBy = "trainings", targetEntity = User::class) var users: MutableList<User> = arrayListOf(),
         @OneToMany(mappedBy = "training", targetEntity = DayOfTraining::class)
         var daysOfTrainings: MutableList<DayOfTraining> = arrayListOf(),

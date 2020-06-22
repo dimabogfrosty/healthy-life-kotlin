@@ -13,5 +13,7 @@ data class Achievement(
         var id: Long? = null,
         var name: String = "",
         var description: String = "",
+        var measure: String? = null,
+        var goal: Double = 0.0,
         @Column(name = "image_src") var imageSource: String = "",
         @ManyToMany(mappedBy = "achievements", targetEntity = User::class) var users: MutableList<User> = arrayListOf())

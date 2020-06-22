@@ -1,5 +1,3 @@
-ALTER TABLE trainings DROP COLUMN measure;
-
 ALTER TABLE exercises
 ADD COLUMN measure VARCHAR(255)
 ;

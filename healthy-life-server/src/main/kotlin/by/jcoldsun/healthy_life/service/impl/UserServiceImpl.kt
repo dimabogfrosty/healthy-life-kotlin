@@ -92,6 +92,7 @@ class UserServiceImpl(private val userRepository: UserRepository,
         } else throw Exception("Bad request")
     }
 
+    @Transactional
     override fun refreshUserAchievements(userId: Long): List<Achievement> {
         val user = this.getById(userId)
         val achievements = achievementService.getAll()

@@ -7,4 +7,5 @@ interface AchievementService : BaseService<Achievement> {
     fun getAchievementByName(name: String): Achievement?
     fun getUserAchievements(userId: Long): List<Achievement>
     fun getNewUserAchievements(user: User, possibleAchievements: List<Achievement>): List<Achievement>
+//    fun getAchievementsWithScore(userId: Long): List<AchievementScore>
 }

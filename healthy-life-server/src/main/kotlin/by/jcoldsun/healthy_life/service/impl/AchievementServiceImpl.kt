@@ -1,7 +1,6 @@
 package by.jcoldsun.healthy_life.service.impl
 
 import by.jcoldsun.healthy_life.entity.Achievement
-import by.jcoldsun.healthy_life.entity.Record
 import by.jcoldsun.healthy_life.entity.Report
 import by.jcoldsun.healthy_life.entity.User
 import by.jcoldsun.healthy_life.exception.entity.AchievementNotFoundException
@@ -13,20 +12,19 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = true)
 class AchievementServiceImpl(private val achievementRepository: AchievementRepository) : AchievementService {
-    companion object {
-        const val ONE_KILOMETER = 1.0
-        const val TEN_KILOMETERS = 10.0
-        const val FIFTEEN_KILOMETERS = 15.0
-    }
-
     override fun getAchievementByName(name: String) = achievementRepository.findByName(name)
             ?: throw AchievementNotFoundException("Achievement with name = $name does not exist")
 
     override fun getUserAchievements(userId: Long) = achievementRepository.findAchievementsByUsersId(userId)
 
     override fun getNewUserAchievements(user: User, possibleAchievements: List<Achievement>): List<Achievement> {
-        return possibleAchievements.filter { achievement -> isNewAchievement(user, achievement) }
+        return possibleAchievements.filter { achievement -> getAchievementScore(user, achievement) > achievement.goal }
     }
+
+//    override fun getAchievementsWithScore(userId: Long): List<AchievementScore> {
+//        val achievements = getUserAchievements(userId)
+//
+//    }
 
     override fun getAll(): MutableList<Achievement> = achievementRepository.findAll()
 
@@ -39,14 +37,14 @@ class AchievementServiceImpl(private val achievementRepository: AchievementRepos
     @Transactional
     override fun delete(id: Long) = achievementRepository.delete(getById(id))
 
-    private fun isNewAchievement(user: User, achievement: Achievement) = when (achievement.name) {
-        "1K meters at once" -> isDistanceAtOnce(user.records, ONE_KILOMETER)
-        "Total 10K meters" -> isTotalDistance(Report(user.records), TEN_KILOMETERS)
-        "Total 15K meters" -> isTotalDistance(Report(user.records), FIFTEEN_KILOMETERS)
-        else -> false
+    private fun getAchievementScore(user: User, achievement: Achievement) = when (achievement.name) {
+        "1K meters at once" -> getDistanceAtOnceScore(Report(user.records))
+        "Total 10K meters",
+        "Total 15K meters" -> getTotalDistanceScore(Report(user.records))
+        else -> 0.0
     }
 
-    private fun isDistanceAtOnce(userRecodes: List<Record>, distance: Double) = userRecodes.any { record -> record.distance > distance }
+    private fun getDistanceAtOnceScore(report: Report) = report.getMaxDistance()
 
-    private fun isTotalDistance(report: Report, distance: Double) = report.getTotalDistance() > distance
+    private fun getTotalDistanceScore(report: Report) = report.getTotalDistance()
 }

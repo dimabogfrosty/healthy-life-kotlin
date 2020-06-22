@@ -23,7 +23,8 @@ class AchievementServiceImpl(private val achievementRepository: AchievementRepos
     }
 
     override fun getAchievementsWithScore(user: User): List<AchievementScore> {
-        return getAll().map { achievement -> AchievementScore(achievement, getAchievementScore(user, achievement)) }
+        return getAll().map { achievement -> val score = getAchievementScore(user, achievement)
+            AchievementScore(achievement, if (score < achievement.goal) score else achievement.goal) }
     }
 
     override fun getAll(): MutableList<Achievement> = achievementRepository.findAll()

@@ -17,4 +17,5 @@ interface UserService : BaseService<User>, UserDetailsService {
     fun removeRole(userId: Long, roleId: Long): List<Role>
     fun removeAchievement(userId: Long, achievementId: Long): List<Achievement>
     fun removeTraining(userId: Long, trainingId: Long): List<Training>
+    fun calculateUserAchievements(userId: Long): List<Achievement>
 }

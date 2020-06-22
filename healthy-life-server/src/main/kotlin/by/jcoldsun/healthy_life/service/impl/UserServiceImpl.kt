@@ -92,6 +92,13 @@ class UserServiceImpl(private val userRepository: UserRepository,
         } else throw Exception("Bad request")
     }
 
+    override fun calculateUserAchievements(userId: Long): List<Achievement> {
+        val user = this.getById(userId)
+        val achievements = achievementService.getAll()
+                .filter { achievement -> !user.achievements.contains(achievement) }
+        return achievementService.getNewUserAchievements(user, achievements)
+    }
+
     override fun getById(id: Long): User = userRepository.findById(id)
             .orElseThrow { UserNotFoundException("User with id = $id does not exist") }
 

@@ -7,7 +7,7 @@ import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import java.time.LocalDate
 
-@RunWith(MockitoJUnitRunner::class)
+
 open class BaseServiceTests {
     @Mock
     lateinit var userRepository: UserRepository

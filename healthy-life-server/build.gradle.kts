@@ -27,9 +27,6 @@ dependencies {
     // Postgres
     runtimeOnly("org.postgresql:postgresql")
 
-    // H2
-    testRuntimeOnly("com.h2database:h2")
-
     // Swagger
     implementation("io.springfox:springfox-swagger2:2.9.2")
     implementation("io.springfox:springfox-swagger-ui:2.9.2")
@@ -44,26 +41,3 @@ allOpen {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
-
-sourceSets {
-    create("integrationTest") {
-        compileClasspath += sourceSets.main.get().output
-        runtimeClasspath += sourceSets.main.get().output
-    }
-}
-
-val integrationTestImplementation: Configuration by configurations.getting {
-    extendsFrom(configurations.testImplementation.get())
-    extendsFrom(configurations.testRuntimeOnly.get())
-}
-
-val integrationTest = task<Test>("integrationTest") {
-    description = "Runs integration tests."
-    group = "verification"
-
-    testClassesDirs = sourceSets["integrationTest"].output.classesDirs
-    classpath = sourceSets["integrationTest"].runtimeClasspath
-//    shouldRunAfter("test")
-}
-
-//tasks.check { dependsOn(integrationTest) }

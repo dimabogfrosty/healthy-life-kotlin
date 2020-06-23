@@ -17,7 +17,8 @@ class JwtService(private val authenticationManager: AuthenticationManager, priva
     fun signIn(authenticationRequest: AuthenticationRequest): AuthenticationResponse {
         val username = authenticationRequest.username!!
         val password = authenticationRequest.password!!
-        authenticationManager.authenticate(UsernamePasswordAuthenticationToken(username, password))
+        authenticationManager.authenticate(UsernamePasswordAuthenticationToken(username, password,
+                userService.getByUsername(username).authorities))
         val token = jwtProvider.createToken(userService.getByUsername(username).id.toString())
         return AuthenticationResponse(userService.getByUsername(username).id!!, token)
     }

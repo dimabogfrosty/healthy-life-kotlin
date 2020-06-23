@@ -29,4 +29,14 @@ class UserServiceTests : BaseServiceTests() {
         verify(userRepository, times(1)).findByUsername(user.username)
     }
 
+    @Test
+    fun `when GetByEmail Then Return User`() {
+        `when`(userRepository.findByEmail(user.email)).thenReturn(user)
+
+        val actualUser = userService.getByEmail(user.email)
+
+        assertThat(actualUser.email, `is`(user.email))
+        verify(userRepository, times(1)).findByEmail(user.email)
+    }
+
 }

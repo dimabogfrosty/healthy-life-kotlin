@@ -7,23 +7,23 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/v1/achievements")
+@RequestMapping("/api/v1")
 class AchievementController(private val achievementService: AchievementService) {
 
-    @GetMapping
+    @GetMapping("/achievements")
     fun getAllAchievements() = ResponseEntity(achievementService.getAll(), HttpStatus.OK)
 
-    @GetMapping("/{id:\\d+}")
+    @GetMapping("/achievements/{id:\\d+}")
     fun getAchievementById(@PathVariable id: Long) = ResponseEntity(achievementService.getById(id), HttpStatus.OK)
 
-    @PostMapping
+    @PostMapping("/admin/achievements")
     fun createAchievement(@RequestBody achievement: Achievement)
             = ResponseEntity(achievementService.save(achievement), HttpStatus.CREATED)
 
-    @PutMapping
+    @PutMapping("/admin/achievements")
     fun updateAchievement(@RequestBody achievement: Achievement)
             = ResponseEntity(achievementService.save(achievement), HttpStatus.OK)
 
-    @DeleteMapping("/{id:\\d+}")
+    @DeleteMapping("/admin/achievements/{id:\\d+}")
     fun deleteAchievement(@PathVariable id: Long) = ResponseEntity(achievementService.delete(id), HttpStatus.OK)
 }

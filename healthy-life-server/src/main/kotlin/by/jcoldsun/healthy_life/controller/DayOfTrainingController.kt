@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/v1/days")
+@RequestMapping("/api/v1/admin/days")
 class DayOfTrainingController(private val dayOfTrainingService: DayOfTrainingService) {
 
     @GetMapping

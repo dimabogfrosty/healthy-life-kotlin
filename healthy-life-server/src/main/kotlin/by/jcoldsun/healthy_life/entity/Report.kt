@@ -17,6 +17,7 @@ open class Report(private val records: List<Record>) {
     fun getTotalDistance(): Double {
         val totalDistance = records.stream().map(Record::distance)
                 .reduce { x: Double, y: Double -> x + y }.get()
+        println("-------------------------------------------------------$totalDistance")
         return ((totalDistance * 100).roundToLong() / 100).toDouble()
     }
 

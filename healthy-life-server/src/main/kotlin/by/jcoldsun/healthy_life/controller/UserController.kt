@@ -18,7 +18,7 @@ class UserController(private val userService: UserService,
     @GetMapping("/admin/users")
     fun getAllUsers() = ResponseEntity(userService.getAll(), HttpStatus.OK)
 
-    @GetMapping(name = "/admin/users", params = ["page", "size"])
+    @GetMapping(value = ["/admin/users"], params = ["page", "size"])
     fun getAllUsersWithPagination(@RequestParam page: Int, @RequestParam size: Int) = ResponseEntity(userService.getAllUserWithPagination(page - 1, size), HttpStatus.OK)
 
     @GetMapping("/users/{id:\\d+}")

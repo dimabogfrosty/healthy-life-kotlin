@@ -4,7 +4,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 open class Report(private val records: List<Record>) {
-    fun getAverageTime(): LocalTime = LocalTime.ofNanoOfDay(getTotalTime().toNanoOfDay() / records.size)
+    fun getAverageTime(): LocalTime = LocalTime.ofNanoOfDay((getTotalTime().toNanoOfDay() / records.size.toLong()))
 
     fun getTotalTime(): LocalTime = LocalTime.ofNanoOfDay(runningTimeInNanoOfDay()
             .reduce { x: Long, y: Long -> x + y }.get())

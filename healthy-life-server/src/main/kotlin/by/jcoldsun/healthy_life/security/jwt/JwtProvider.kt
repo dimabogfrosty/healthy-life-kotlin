@@ -44,7 +44,7 @@ class JwtProvider(private val userService: UserService, private val invalidToken
 
     fun getAuthentication(token: String?): Authentication {
         val userDetails = userService.getById(getUserId(token).toLong())
-        return UsernamePasswordAuthenticationToken(userDetails, userDetails.password, userDetails.authorities)
+        return UsernamePasswordAuthenticationToken(userDetails, null, userDetails.authorities)
     }
 
     fun getUserId(token: String?): String = getClaimsFromToken(token).subject

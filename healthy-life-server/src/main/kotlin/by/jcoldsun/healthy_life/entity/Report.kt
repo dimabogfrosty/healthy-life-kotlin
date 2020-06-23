@@ -11,21 +11,23 @@ open class Report(private val records: List<Record>) {
 
     fun getMaxTime(): LocalTime = LocalTime.ofNanoOfDay(runningTimeInNanoOfDay().max(Long::compareTo).get())
 
-    fun getAverageDistance() = getTotalDistance() / records.size
+    fun getAverageDistance() = round(getTotalDistance() / records.size, 1)
 
-    fun getTotalDistance() = records.stream().map(Record::distance)
-            .reduce { x: Double, y: Double -> x + y }.get()
+    fun getTotalDistance() = round(records.stream().map(Record::distance)
+            .reduce { x: Double, y: Double -> x + y }.get(), 1)
 
-    fun getMaxDistance() = records.stream().map(Record::distance).max(Double::compareTo).get()
+    fun getMaxDistance() = round(records.stream().map(Record::distance).max(Double::compareTo).get(), 1)
 
-    fun getAverageSpeed() = getAverageDistance() / (getAverageTime().toSecondOfDay() / 3600.toDouble())
+    fun getAverageSpeed() = round(getAverageDistance() / (getAverageTime().toSecondOfDay() / 3600.toDouble()), 1)
 
-    fun getMaxSpeed() = records.stream()
+    fun getMaxSpeed() = round(records.stream()
             .map { record -> record.distance / (record.getRunningTime().toSecondOfDay() / 3600.toDouble()) }
-            .max(Double::compareTo).get()
+            .max(Double::compareTo).get(), 1)
 
     private fun runningTimeInNanoOfDay() = records.stream()
             .map { record -> record.getRunningTime().toNanoOfDay() }
+
+    private fun round(num: Double, roundCount: Int) = String.format("%.$roundCount" + "f", num).toDouble()
 }
 
 class DateReport(records: List<Record>,

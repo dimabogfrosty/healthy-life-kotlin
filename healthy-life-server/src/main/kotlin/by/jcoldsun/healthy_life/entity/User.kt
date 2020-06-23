@@ -28,7 +28,7 @@ data class User(
         var gender: String = "",
         var weight: Double = 0.0,
         var height: Double = 0.0,
-        @ManyToMany(targetEntity = Role::class)
+        @ManyToMany(targetEntity = Role::class, fetch = FetchType.EAGER)
         @JoinTable(
                 name = "users_roles",
                 joinColumns = [JoinColumn(name = "user_id")],

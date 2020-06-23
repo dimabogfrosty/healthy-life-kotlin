@@ -14,7 +14,7 @@ class BaseControllerTests {
     companion object {
         const val BASE_URL = "/api/v1"
         const val GET_USER = "/users"
-        const val USER_ID = "1"
+        const val USER_ID = "11111111"
         const val GET_REPORT = "/reports"
     }
 

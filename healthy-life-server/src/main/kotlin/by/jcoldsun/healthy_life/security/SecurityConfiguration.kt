@@ -36,7 +36,7 @@ class SecurityConfiguration(private val jwtProvider: JwtProvider, private val us
                 .authorizeRequests()
                 .antMatchers("/api/v1/auth/signin", "/swagger-ui.html", "/api/v1/users/registration").permitAll()
                 .antMatchers("/api/v1/auth/signout").authenticated()
-                .antMatchers("/api/v1/**").authenticated()
+                .antMatchers("/api/v1/**").hasRole("USER")
 //                .antMatchers("/api/v1/admin/**").hasRole("ADMIN")
                 .and().apply(JwtSecurityConfigurer(jwtProvider))
     }

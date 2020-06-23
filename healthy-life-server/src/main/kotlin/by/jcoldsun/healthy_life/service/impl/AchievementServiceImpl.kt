@@ -1,18 +1,21 @@
 package by.jcoldsun.healthy_life.service.impl
 
 import by.jcoldsun.healthy_life.entity.Achievement
+import by.jcoldsun.healthy_life.entity.DateReport
 import by.jcoldsun.healthy_life.entity.Report
 import by.jcoldsun.healthy_life.entity.User
 import by.jcoldsun.healthy_life.exception.entity.AchievementNotFoundException
 import by.jcoldsun.healthy_life.repository.AchievementRepository
 import by.jcoldsun.healthy_life.service.AchievementService
+import by.jcoldsun.healthy_life.service.ReportService
 import by.jcoldsun.healthy_life.service.model.AchievementScore
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional(readOnly = true)
-class AchievementServiceImpl(private val achievementRepository: AchievementRepository) : AchievementService {
+class AchievementServiceImpl(private val achievementRepository: AchievementRepository,
+                             private val reportService: ReportService) : AchievementService {
     override fun getAchievementByName(name: String) = achievementRepository.findByName(name)
             ?: throw AchievementNotFoundException("Achievement with name = $name does not exist")
 
@@ -42,10 +45,18 @@ class AchievementServiceImpl(private val achievementRepository: AchievementRepos
         "1K meters at once" -> getDistanceAtOnceScore(Report(user.records))
         "Total 10K meters",
         "Total 15K meters" -> getTotalDistanceScore(Report(user.records))
+        "Average speed for any week is more than 15 km / h" -> getMaxAverageSpeedForAnyWeeks(reportService.createReportByWeeks(user))
+        "Speed is our life" -> getMaxSpeed(Report(user.records))
         else -> 0.0
     }
 
     private fun getDistanceAtOnceScore(report: Report) = report.getMaxDistance()
 
     private fun getTotalDistanceScore(report: Report) = report.getTotalDistance()
+
+    private fun getMaxAverageSpeedForAnyWeeks(weeksReport: List<DateReport>) = weeksReport.stream()
+            .map { weeksReport -> weeksReport.getAverageSpeed() }
+            .max(Double::compareTo).get()
+
+    private fun getMaxSpeed(report: Report) = report.getMaxSpeed()
 }

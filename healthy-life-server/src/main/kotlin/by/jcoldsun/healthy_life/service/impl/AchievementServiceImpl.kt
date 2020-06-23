@@ -45,7 +45,7 @@ class AchievementServiceImpl(private val achievementRepository: AchievementRepos
         "1K meters at once" -> getDistanceAtOnceScore(Report(user.records))
         "Total 10K meters",
         "Total 15K meters" -> getTotalDistanceScore(Report(user.records))
-        "Average speed for any week is more than 15 km / h" -> getMaxAverageSpeedForAnyWeeks(reportService.createReportByWeeks(user))
+        "Average speed for any week is more than 10 km / h" -> getMaxAverageSpeedForAnyWeeks(reportService.createReportByWeeks(user))
         "Speed is our life" -> getMaxSpeed(Report(user.records))
         else -> 0.0
     }
@@ -54,8 +54,8 @@ class AchievementServiceImpl(private val achievementRepository: AchievementRepos
 
     private fun getTotalDistanceScore(report: Report) = report.getTotalDistance()
 
-    private fun getMaxAverageSpeedForAnyWeeks(weeksReport: List<DateReport>) = weeksReport.stream()
-            .map { weekReport -> weekReport.getAverageSpeed() }
+    private fun getMaxAverageSpeedForAnyWeeks(weeksReport: List<DateReport>): Double = weeksReport.stream()
+            .map(DateReport::getAverageSpeed)
             .max(Double::compareTo).get()
 
     private fun getMaxSpeed(report: Report) = report.getMaxSpeed()

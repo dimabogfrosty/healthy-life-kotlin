@@ -54,9 +54,13 @@ class AchievementServiceImpl(private val achievementRepository: AchievementRepos
 
     private fun getTotalDistanceScore(report: Report) = report.getTotalDistance()
 
-    private fun getMaxAverageSpeedForAnyWeeks(weeksReport: List<DateReport>): Double = weeksReport.stream()
-            .map(DateReport::getAverageSpeed)
-            .max(Double::compareTo).get()
+    private fun getMaxAverageSpeedForAnyWeeks(weeksReport: List<DateReport>): Double {
+        val averageSpeed = weeksReport.stream()
+                .map(DateReport::getAverageSpeed)
+                .max(Double::compareTo).get()
+        println(averageSpeed)
+        return averageSpeed
+    }
 
     private fun getMaxSpeed(report: Report) = report.getMaxSpeed()
 }

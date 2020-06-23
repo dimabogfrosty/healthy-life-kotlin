@@ -2,9 +2,11 @@ package by.jcoldsun.healthy_life.entity
 
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.temporal.ChronoUnit
 
 open class Report(private val records: List<Record>) {
-    fun getAverageTime(): LocalTime = LocalTime.ofNanoOfDay((getTotalTime().toNanoOfDay() / records.size.toLong()))
+    fun getAverageTime(): LocalTime = LocalTime.ofNanoOfDay(getTotalTime().toNanoOfDay() / records.size)
+            .truncatedTo(ChronoUnit.SECONDS)
 
     fun getTotalTime(): LocalTime = LocalTime.ofNanoOfDay(runningTimeInNanoOfDay()
             .reduce { x: Long, y: Long -> x + y }.get())
